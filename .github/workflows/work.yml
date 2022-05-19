@@ -15,12 +15,14 @@ jobs:
         echo Hello World!
 
   run-webhook2:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: ${{ github.event_type }} == "webhook-2". 
     steps:
     - name: Hello webhook2
       run: |
         echo webhook-2
+        hostname
+        ls -l
         echo Hello World!
   run:
     runs-on: ubuntu-latest
