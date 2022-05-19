@@ -7,24 +7,24 @@ on:
 jobs:
   run-webhook1:
     runs-on: ubuntu-latest
-    if: ${{ github.event_type}} == "webhook-1"
+    if: ${{ github.event_type }} == "webhook-1"
     steps:
     - name: Hello webhook1
       run: |
-      
+        echo webhook-1
         echo Hello World!
 
   run-webhook2:
     runs-on: ubuntu-latest
-    if: ${{ github.event_type}} == "webhook-2"
+    if: ${{ github.event_type }} == "webhook-2". 
     steps:
     - name: Hello webhook2
       run: |
-        echo webhook2
+        echo webhook-2
         echo Hello World!
   run:
     runs-on: ubuntu-latest
     steps:
-    - env:
-        MESSAGE: ${{ github.event.client_payload.message }}
+      - env:
+          MESSAGE: ${{ github.event.client_payload.message }}
         run: echo $MESSAGE
