@@ -22,6 +22,8 @@ jobs:
       run: |
         echo webhook-2
         hostname
+        pwd
+        id
         ls -l
         echo Hello World!
   run:
