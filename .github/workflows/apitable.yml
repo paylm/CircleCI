@@ -5,10 +5,6 @@ on:
     branches:
       - main
 
-on:
-  push:
-    branches:
-      - main
 jobs:
   deploy:
     name: Deploy to apitable
@@ -25,6 +21,5 @@ jobs:
       # Optional, additional flags to pass to ansible-playbook
       options: |
         --inventory .hosts
-        --limit group1
         --extra-vars hello=there
         --verbose
