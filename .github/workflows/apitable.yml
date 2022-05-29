@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
     - name: Deploy to apitable
       uses: dawidd6/action-ansible-playbook@v2.5.0
       with:
