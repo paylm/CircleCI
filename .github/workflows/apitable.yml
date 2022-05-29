@@ -4,22 +4,25 @@ on:
   push:
     branches:
       - main
-
 jobs:
   deploy:
-    name: Deploy to apitable
-    uses: dawidd6/action-ansible-playbook@v2.5.0
-    with:
-      # Required, playbook filepath
-      playbook: run.yml
-      # Optional, directory where playbooks live
-      directory: ./apitable/ansible
-      # Optional, SSH private key
-      key: ${{secrets.SSH_PRIVATE_KEY}}
-      # Optional, SSH known hosts file content
-      known_hosts: .known_hosts
-      # Optional, additional flags to pass to ansible-playbook
-      options: |
-        --inventory .hosts
-        --extra-vars hello=there
-        --verbose
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Deploy to apitable
+      uses: dawidd6/action-ansible-playbook@v2.5.0
+      with:
+        # Required, playbook filepath
+        playbook: run.yml
+        # Optional, directory where playbooks live
+        directory: ./apitable/ansible
+        # Optional, SSH private key
+        key: ${{secrets.SSH_PRIVATE_KEY}}
+        # Optional, SSH known hosts file content
+        known_hosts: .known_hosts
+        # Optional, additional flags to pass to ansible-playbook
+        options: |
+          --inventory .hosts
+          --extra-vars hello=there
+          --verbose
