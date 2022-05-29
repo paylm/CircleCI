@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      run: |
+        export ANSIBLE_HOST_KEY_CHECKING=False
     - name: Deploy to apitable
       uses: dawidd6/action-ansible-playbook@v2.5.0
       with:
@@ -21,10 +23,10 @@ jobs:
         directory: ./apitable/ansible
         # Optional, SSH private key
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        # Optional, SSH known .hosts file content
+        # Optional, SSH known hosts file content
         known_hosts: .known_hosts
         # Optional, additional flags to pass to ansible-playbook
         options: |
-          --inventory .hosts
+          --inventory hosts
           --extra-vars hello=there
           --verbose
