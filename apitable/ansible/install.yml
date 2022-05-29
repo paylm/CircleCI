@@ -1,0 +1,77 @@
+
+---
+- name: Apitable Integration Install
+  hosts: all
+  # init machines
+  tasks:
+    - name: Ensure a list of packages are installed
+      become: true
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+    - name: Add Docker GPG apt Key
+      become: true
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Add Docker Repository
+      become: true
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+    - name: Update apt and install docker-ce
+      become: true
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+    - name: Install Docker Module for Python
+      become: true
+      pip:
+        name: docker
+    - name: Install Docker Module for Python
+      become: true
+      pip:
+        name: docker
+    - name: Install Docker Compose for Python
+      become: true
+      pip:
+        name: docker-compose
+    - name: Create Install dir 
+      become: true
+      file:
+        path: "/data"
+        state: directory
+        mode: 0775
+    - name: Create a filesystem on volume
+      become: true
+      filesystem:
+        fstype: xfs
+        dev: "/dev/nvme1n1"
+    - name: Mount DB directory
+      become: true
+      mount:
+        path: "/data"
+        src:  "/dev/nvme1n1"
+        state: mounted
+        fstype: xfs
+    - name: Partition
+      become: true
+      shell: |
+        df -h
+        xfs_growfs -d /data
+        df -h
+        chown -R {{ ansible_ssh_user }}:{{ ansible_ssh_user }} /data
+    - name: Copy Deployment Scripts
+      copy:
+        src: "{{ playbook_dir }}/../../../deployments/apitable-integration"
+        dest: /data
+        force: no

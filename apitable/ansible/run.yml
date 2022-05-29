@@ -1,0 +1,19 @@
+---
+- name: Apitable Integration Run
+  hosts: all
+  become: true
+  tasks:
+    - name: Run App
+      become: true
+      # docker_compose:
+      #   files:
+      #     - docker-compose-vm.yml
+      #   project_src: /tmp/apitable-integration
+      #   state: absent
+      shell: 
+        cmd: |
+          bash deploy-vm.sh 
+          docker-compose -f docker-compose-vm.yml up -d
+        chdir: /data/apitable-integration 
+      environment:
+        CR_PAT: '{{ CR_PAT }}'

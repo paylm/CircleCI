@@ -1,0 +1,29 @@
+---
+- name: Apitable Integration Update
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy Deployment Scripts
+      copy:
+        src: "{{ playbook_dir }}/../../../deployments/apitable-integration/{{item}}"
+        dest: "/data/apitable-integration/{{item}}"
+        force: yes
+      ignore_errors: True
+      with_items:
+      - "deploy-vm.sh"
+      - "docker-compose-vm.yml"
+      - "config/{{app}}"
+    - name: Update App
+      become: true
+      #tags: update-app,never
+      # docker_compose:
+      #   files:
+      #     - docker-compose-vm.yml
+      #   project_src: /tmp/apitable-integration
+      #   state: absent
+      shell: 
+        cmd: |
+          bash deploy-vm.sh update-app {{app}} {{tag}}
+        chdir: /data/apitable-integration 
+      environment:
+        CR_PAT: '{{ CR_PAT }}'
