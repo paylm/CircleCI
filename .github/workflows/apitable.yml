@@ -21,7 +21,7 @@ jobs:
         directory: ./apitable/ansible
         # Optional, SSH private key
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        # Optional, SSH known hosts file content
+        # Optional, SSH known .hosts file content
         known_hosts: .known_hosts
         # Optional, additional flags to pass to ansible-playbook
         options: |
