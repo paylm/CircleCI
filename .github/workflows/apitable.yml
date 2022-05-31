@@ -15,7 +15,8 @@ jobs:
       
     - name: check key
       run: |
-        echo ${{secrets.SSH_PRIVATE_KEY}}
+        echo ${{secrets.SSH_PRIVATE_KEY}} > /tmp/id_rsa
+        cat /tmp/id_rsa
         sudo apt-get update
         sudo apt-get install ansible
     - name: env
