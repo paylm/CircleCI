@@ -16,5 +16,8 @@ jobs:
       uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-    - run: |
-       kubectl get nodes
+      with:
+         args: get pods || whoami && kubectl get svc 
+      
+      
+
