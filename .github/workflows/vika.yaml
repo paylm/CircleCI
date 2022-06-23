@@ -16,8 +16,7 @@ name: Vika deploy
 #
 on:
   repository_dispatch:
-    types:
-      - deploy
+    types: [deploy]
 jobs:
   deploy-vika:
     #if: github.event_type == 'deploy'
