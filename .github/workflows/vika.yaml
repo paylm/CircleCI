@@ -20,8 +20,8 @@ on:
       - deploy
 jobs:
   deploy-vika:
-    runs-on: ubuntu-latest
     if: github.event_type == 'deploy'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
