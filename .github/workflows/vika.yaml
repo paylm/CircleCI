@@ -21,7 +21,7 @@ on:
 jobs:
   deploy-vika:
     runs-on: ubuntu-latest
-    if: ${{ github.event_type == "deploy" && github.event.client_payload.product == "vika" }}
+    if: ${{ github.event_type == 'deploy' && github.event.client_payload.product == 'vika' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,7 +33,7 @@ jobs:
           args: whoami && kubectl get pods && sh -x deploy.sh update-app ${{ github.event.client_payload.app }} ${{ github.event.client_payload.containerName }} ${{ github.event.client_payload.image }} ${{ github.event.client_payload.env }}
   deploy-apitable:
     runs-on: ubuntu-latest
-    if: ${{ github.event_type == "deploy" && github.event.client_payload.product == "apitable" }}
+    if: ${{ github.event_type == 'deploy' && github.event.client_payload.product == 'apitable' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
