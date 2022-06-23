@@ -19,7 +19,7 @@ on:
     types: [deploy]
 jobs:
   deploy-vika:
-    if: ${{ github.event.event_type == 'deploy' }}
+    if: ${{ github.event_name == 'deploy' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
