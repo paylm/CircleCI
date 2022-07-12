@@ -30,18 +30,8 @@ jobs:
         env:
           CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
           CI_COMMIT_AUTHOR: Continuous Integration
-        run: |
-          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
-          git config --global user.email "username@users.noreply.github.com"
-          git stash
-          git pull
-          git checkout -b deploy-version origin/deploy-version
-          date > .version
-          mkdir -p ${{ github.event.client_payload.edition }}-${{ github.event.client_payload.env }}/${{ github.event.client_payload.app }}
-          echo "${{ github.event.client_payload.image }}" > ${{ github.event.client_payload.edition }}-${{ github.event.client_payload.env }}/${{ github.event.client_payload.app }}.version
-          git add *
-          git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
-          git push
+        run: bash commit.sh ${{ github.event.client_payload.app }} ${{ github.event.client_payload.containerName }} ${{ github.event.client_payload.image }} ${{ github.event.client_payload.env }} ${{ github.event.client_payload.edition }}
+
 #      - name: deploy k8s
 #        uses: wahyd4/kubectl-helm-action@master
 #        env:
