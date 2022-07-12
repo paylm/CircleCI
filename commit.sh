@@ -10,8 +10,8 @@ deployment=$3
 image=$4
 env=${5:integration}
 edition=${6:-vika}
-
-          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+env
+          git config --global user.name "${CI_COMMIT_AUTHOR}"
           git config --global user.email "username@users.noreply.github.com"
           git stash
           git pull
@@ -20,5 +20,5 @@ edition=${6:-vika}
           mkdir -p ${edition}-${env}
           echo "${image}" > ${edition}-${env}/${app}.version
           git add *
-          git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
+          git commit -a -m "${env.CI_COMMIT_MESSAGE}"
           git push
