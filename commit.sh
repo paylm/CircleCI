@@ -20,5 +20,5 @@ env
           mkdir -p ${edition}-${env}
           echo "${image}" > ${edition}-${env}/${app}.version
           git add *
-          git commit -a -m "${env.CI_COMMIT_MESSAGE}"
+          git commit -a -m "${CI_COMMIT_MESSAGE}"
           git push
