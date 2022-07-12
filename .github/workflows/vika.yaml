@@ -37,7 +37,9 @@ jobs:
           git pull
           git checkout -b deploy-version origin/deploy-version
           date > .version
-          git add .version
+          mkdir -p ${{ github.event.client_payload.edition }}-${{ github.event.client_payload.env }}/${{ github.event.client_payload.app }}
+          echo "${{ github.event.client_payload.image }}" > ${{ github.event.client_payload.edition }}-${{ github.event.client_payload.env }}/${{ github.event.client_payload.app }}.version
+          git add *
           git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
           git push
 #      - name: deploy k8s
