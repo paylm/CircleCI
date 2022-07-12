@@ -5,7 +5,7 @@ name: Vika deploy
 # {
 #  "event_type": "deploy",
 #  "client_payload": {
-#    "product": vika,   产品： vika or apitable
+#    "edition": vika,   产品： vika or apitable
 #    "env": "integration" 环境
 #    "app": "backend-server" 服务
 #    "containerName": "backend-server" 容器名
@@ -13,6 +13,7 @@ name: Vika deploy
 #    "replicas": 1
 #  }
 #}
+#
 #
 on:
   repository_dispatch:
@@ -24,12 +25,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: deploy k8s
-        uses: wahyd4/kubectl-helm-action@master
+      - name: GIT commit and push all changed files
         env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
-        with:
-          args: whoami && kubectl get pods && sh -x deploy.sh update-app ${{ github.event.client_payload.app }} ${{ github.event.client_payload.containerName }} ${{ github.event.client_payload.image }} ${{ github.event.client_payload.env }}
+          CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
+          CI_COMMIT_AUTHOR: Continuous Integration
+        run: |
+          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+          git config --global user.email "username@users.noreply.github.com"
+          git stash
+          git checkout -b deploy-version origin/deploy-version
+          git pull
+          date > .version
+          git add .version
+          git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
+          git push
+#      - name: deploy k8s
+#        uses: wahyd4/kubectl-helm-action@master
+#        env:
+#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
+#        with:
+#          args: whoami && kubectl get pods && sh -x deploy.sh update-app ${{ github.event.client_payload.app }} ${{ github.event.client_payload.containerName }} ${{ github.event.client_payload.image }} ${{ github.event.client_payload.env }}
 
   deploy-apitable:
     runs-on: ubuntu-latest
@@ -37,10 +52,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: deploy k8s
-        uses: wahyd4/kubectl-helm-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
-        with:
-          args: whoami && kubectl get pods
+#      - name: deploy k8s
+#        uses: wahyd4/kubectl-helm-action@master
+#        env:
+#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
+#        with:
+#          args: whoami && kubectl get pods
 
