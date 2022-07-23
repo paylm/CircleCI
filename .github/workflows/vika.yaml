@@ -47,6 +47,7 @@ jobs:
         with:
           args: ｜
             [ 1 -eq 1 ] &&  echo "iiiiiiiiii ok ...."
+            [ ${{ github.event.client_payload.env }} == "production" ] && echo "deploy release"
 
   deploy-apitable:
     runs-on: ubuntu-latest
