@@ -45,7 +45,8 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
         with:
-          args: a=1 &&  echo "iiiiiiiiii ok ...."
+          args: ｜
+            [ 1 -eq 1 ] &&  echo "iiiiiiiiii ok ...."
 
   deploy-apitable:
     runs-on: ubuntu-latest
