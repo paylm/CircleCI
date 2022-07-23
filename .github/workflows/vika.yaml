@@ -46,6 +46,7 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
         with:
           args: |
+            echo "${{ github.event.client_payload.app }}"
             [ "${{ github.event.client_payload.env }}" == "production" ] && echo "deploy release"
 
   deploy-apitable:
