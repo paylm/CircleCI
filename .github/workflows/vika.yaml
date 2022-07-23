@@ -45,7 +45,7 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
         with:
-          args: [ ${{ github.event.client_payload.env == 'production' }} ] && echo "okk...."
+          args: echo "iiiiiiiiii ok ...."
 
   deploy-apitable:
     runs-on: ubuntu-latest
