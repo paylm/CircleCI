@@ -26,18 +26,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: GIT commit and push all changed files
-        env:
-          CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
-          CI_COMMIT_AUTHOR: Continuous Integration
-        run: bash commit.sh ${{ github.event.client_payload.app }} ${{ github.event.client_payload.containerName }} ${{ github.event.client_payload.image }} ${{ github.event.client_payload.env }} ${{ github.event.client_payload.edition }}
-
-#      - name: deploy k8s
-#        uses: wahyd4/kubectl-helm-action@master
+#      - name: GIT commit and push all changed files
 #        env:
-#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
-#        with:
-#          args: whoami && kubectl get pods && sh -x deploy.sh update-app ${{ github.event.client_payload.app }} ${{ github.event.client_payload.containerName }} ${{ github.event.client_payload.image }} ${{ github.event.client_payload.env }}
+#          CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
+#          CI_COMMIT_AUTHOR: Continuous Integration
+#        run: bash commit.sh ${{ github.event.client_payload.app }} ${{ github.event.client_payload.containerName }} ${{ github.event.client_payload.image }} ${{ github.event.client_payload.env }} ${{ github.event.client_payload.edition }}
+#
+#
+      - name: deploy k8s
+        uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
+        with:
+          args: whoami
+
+      - name: deploy k8s 2
+        uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
+        with:
+          args: [ ${{ github.event.client_payload.env == 'production' }} ] && echo "okk...."
 
   deploy-apitable:
     runs-on: ubuntu-latest
