@@ -73,7 +73,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - shell: |
+      - name: check key
+        run: |
           echo  ${{ github.event.client_payload.edition }}
           pwd
 #      - name: deploy k8s
