@@ -51,10 +51,25 @@ jobs:
 
   deploy-apitable:
     runs-on: ubuntu-latest
-    if: ${{ github.event_type == 'deploy' && github.event.client_payload.product == 'apitable' }}
+    if: ${{ github.event.client_payload.edition == 'apitable' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+#      - name: deploy k8s
+#        uses: wahyd4/kubectl-helm-action@master
+#        env:
+#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
+#        with:
+#          args: whoami && kubectl get pods
+
+  deploy-default:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - shell: |
+          echo  ${{ github.event.client_payload.edition }}
+          pwd
 #      - name: deploy k8s
 #        uses: wahyd4/kubectl-helm-action@master
 #        env:
