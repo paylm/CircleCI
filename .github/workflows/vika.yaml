@@ -51,7 +51,7 @@ jobs:
 
   deploy-apitable:
     runs-on: ubuntu-latest
-    if: ${{ github.event.client_payload.edition == 'apitable' }}
+    if: ${{ github.event_type == 'deploy' && github.event.client_payload.edition == 'apitable' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -76,6 +76,7 @@ jobs:
       - name: check key
         run: |
           echo  ${{ github.event.client_payload.edition }}
+          echo ${{ github.event_type == 'deploy' }}
           pwd
 #      - name: deploy k8s
 #        uses: wahyd4/kubectl-helm-action@master
