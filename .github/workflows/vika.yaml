@@ -72,6 +72,7 @@ jobs:
 
   deploy-default:
     runs-on: ubuntu-latest
+    name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
