@@ -51,7 +51,7 @@ jobs:
             [ "${{ github.event.client_payload.env }}" == "production" ] && echo "deploy release"
 
   deploy-apitable:
-    name: apitable-${{ github.event.client_payload.app}}
+    name: apitable ${{ github.event.client_payload.app}}
     runs-on: ubuntu-latest
     if: ${{ github.event_type == 'deploy' && github.event.client_payload.edition == 'apitable' }}
     steps:
