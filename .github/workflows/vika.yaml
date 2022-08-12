@@ -22,6 +22,7 @@ jobs:
   deploy-vika:
     if: ${{ github.event.action == 'deploy' }}
     runs-on: ubuntu-latest
+    name: ${{ github.event.client_payload.edition }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -50,6 +51,7 @@ jobs:
             [ "${{ github.event.client_payload.env }}" == "production" ] && echo "deploy release"
 
   deploy-apitable:
+    name: apitable-${{ github.event.client_payload.app}}
     runs-on: ubuntu-latest
     if: ${{ github.event_type == 'deploy' && github.event.client_payload.edition == 'apitable' }}
     steps:
