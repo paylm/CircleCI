@@ -73,7 +73,7 @@ jobs:
   deploy-default:
     runs-on: ubuntu-latest
     name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
-#    if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
+    if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
 #    environment:
 #      name: production
 #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
@@ -83,6 +83,7 @@ jobs:
         with:
          secret: ${{ secrets.CR_PAT }}
          approvers: paylm
+         issue-title: Deploying ${{ github.event.client_payload.SEMVER_FULL}} to production
       - name: Checkout
         uses: actions/checkout@v3
       - name: check key
