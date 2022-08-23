@@ -74,9 +74,9 @@ jobs:
     runs-on: ubuntu-latest
     name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
     if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
-    environment:
-      name: production
-      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
+#    environment:
+#      name: production
+#      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
     - name: Wait for approval
         uses: trstringer/manual-approval@v1
         with:
