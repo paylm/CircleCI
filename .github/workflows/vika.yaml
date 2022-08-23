@@ -83,7 +83,7 @@ jobs:
         with:
          secret: ${{ secrets.CR_PAT }}
          approvers: paylm
-         issue-title: Deploying ${{ github.event.client_payload.SEMVER_FULL}} to production
+         issue-title: Deploying ${{ github.event.client_payload.app }} ${{ github.event.client_payload.SEMVER_FULL}} to production
       - name: Checkout
         uses: actions/checkout@v3
       - name: check key
