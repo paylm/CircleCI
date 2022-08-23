@@ -85,7 +85,7 @@ jobs:
           uses: trstringer/manual-approval@v1
           with:
             secret: ${{ secret.CR_PAT }}
-            approvers: myteam,paylm
+            approvers: paylm
             minimum-approvals: 1
       - name: check key
         run: |
