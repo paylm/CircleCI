@@ -77,13 +77,14 @@ jobs:
 #    environment:
 #      name: production
 #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
-    - name: Wait for approval
-        uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.TOKEN }}
-          approvers: myteam,paylm
-          minimum-approvals: 1
+
     steps:
+      - name: Wait for approval
+          uses: trstringer/manual-approval@v1
+          with:
+            secret: ${{ github.TOKEN }}
+            approvers: myteam,paylm
+            minimum-approvals: 1
       - name: Checkout
         uses: actions/checkout@v3
       - name: check key
