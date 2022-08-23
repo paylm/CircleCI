@@ -81,7 +81,7 @@ jobs:
     steps:
       - uses: trstringer/manual-approval@v1
         with:
-         secret: ${{ secret.CR_PAT }}
+         secret: ${{ secrets.CR_PAT }}
          approvers: paylm
       - name: Checkout
         uses: actions/checkout@v3
