@@ -18,25 +18,6 @@ name: Vika deploy
 on:
   repository_dispatch:
     types: [deploy]
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
-      tags:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
-      environment:
-        description: 'Environment to run tests against'
-        type: environment
-        required: true
 jobs:
   deploy-vika:
     if: ${{ github.event.action == 'deploy' }}
@@ -92,6 +73,7 @@ jobs:
   deploy-default:
     runs-on: ubuntu-latest
     name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
+    if: ${{ false }} // <- This make sure the workflow is skipped without any alert
     steps:
       - name: Checkout
         uses: actions/checkout@v3
