@@ -73,20 +73,18 @@ jobs:
   deploy-default:
     runs-on: ubuntu-latest
     name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
-    if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
+#    if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
 #    environment:
 #      name: production
 #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
 
     steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+         secret: ${{ secret.CR_PAT }}
+         approvers: paylm
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Wait for approval
-          uses: trstringer/manual-approval@v1
-          with:
-            secret: ${{ secret.CR_PAT }}
-            approvers: paylm
-            minimum-approvals: 1
       - name: check key
         run: |
           echo ${{ inputs.tags }}
