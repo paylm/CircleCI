@@ -72,7 +72,6 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
-    if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
     #    environment:
     #      name: production
     #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
@@ -101,13 +100,13 @@ jobs:
   deploy-default:
     runs-on: ubuntu-latest
     name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
-    if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
 #    environment:
 #      name: production
 #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
 
     steps:
       - uses: trstringer/manual-approval@v1
+        if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
         with:
          secret: ${{ secrets.CR_PAT }}
          approvers: paylm
