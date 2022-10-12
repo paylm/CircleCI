@@ -114,7 +114,7 @@ jobs:
       - uses: trstringer/manual-approval@v1
         if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
         with:
-         secret: ${{ secrets.CR_PAT }}
+         secret: ${{ steps.generate_token.outputs.token }}
          approvers: paylm
          minimum-approvals: 0
          issue-title: Deploying ${{ github.event.client_payload.app }} ${{ github.event.client_payload.SEMVER_FULL}} to production
