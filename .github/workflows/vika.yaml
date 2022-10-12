@@ -69,33 +69,33 @@ jobs:
 #          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
 #        with:
 #          args: whoami && kubectl get pods
-  deploy-prod:
-    runs-on: ubuntu-latest
-    name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
-    #    environment:
-    #      name: production
-    #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
-
-    steps:
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ secrets.CR_PAT }}
-          approvers: paylm
-          issue-title: Deploying ${{ github.event.client_payload.app }} ${{ github.event.client_payload.SEMVER_FULL}} to production
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: check key
-        run: |
-          echo ${{ inputs.tags }}
-          echo  ${{ github.event.client_payload.edition }}
-          echo ${{ github.event_type == 'deploy' }}
-          pwd
-  #      - name: deploy k8s
-  #        uses: wahyd4/kubectl-helm-action@master
-  #        env:
-  #          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
-  #        with:
-  #          args: whoami && kubectl get pods
+#  deploy-prod:
+#    runs-on: ubuntu-latest
+#    name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
+#    #    environment:
+#    #      name: production
+#    #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
+#
+#    steps:
+#      - uses: trstringer/manual-approval@v1
+#        with:
+#          secret: ${{ secrets.CR_PAT }}
+#          approvers: paylm
+#          issue-title: Deploying ${{ github.event.client_payload.app }} ${{ github.event.client_payload.SEMVER_FULL}} to production
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: check key
+#        run: |
+#          echo ${{ inputs.tags }}
+#          echo  ${{ github.event.client_payload.edition }}
+#          echo ${{ github.event_type == 'deploy' }}
+#          pwd
+#  #      - name: deploy k8s
+#  #        uses: wahyd4/kubectl-helm-action@master
+#  #        env:
+#  #          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
+#  #        with:
+#  #          args: whoami && kubectl get pods
 
   deploy-default:
     runs-on: ubuntu-latest
@@ -105,10 +105,16 @@ jobs:
 #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
 
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - uses: trstringer/manual-approval@v1
         if: ${{ contains(github.event.client_payload.SEMVER_FULL,'release.') }}
         with:
-         secret: ${{ secrets.CR_PAT }}
+         secret: ${{ steps.generate_token.outputs.token }}
          approvers: paylm
          minimum-approvals: 0
          issue-title: Deploying ${{ github.event.client_payload.app }} ${{ github.event.client_payload.SEMVER_FULL}} to production
