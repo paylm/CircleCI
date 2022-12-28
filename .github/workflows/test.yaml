@@ -1,0 +1,25 @@
+name: test
+
+on:
+  push:
+    branches:
+      - "main"
+      - "test/**"
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    paths:
+      - "init-appdata/**"
+  workflow_dispatch:
+  
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+    - name: Running Build
+      shell: bash
+      env:
+         CR_PAT: ${{ secrets.CR_PAT }}
+         MYSQL_HOST: 123
+         MYSQL_PORT: 3306
+      run: |
+          env | grep MYSQL > .env
+          cat .env
