@@ -23,4 +23,5 @@ jobs:
           MYSQL_PORT: 3306
         run: |
           env | grep MYSQL > .env
+          echo "check env values"
           cat .env
