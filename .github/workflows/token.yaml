@@ -14,7 +14,8 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
-      - name: build
-        shell: bash
+      - name: Use token
+        env:
+          TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
-          echo ${{ steps.generate_token.outputs.token }}
+          echo "The generated token is masked: ${TOKEN}"
