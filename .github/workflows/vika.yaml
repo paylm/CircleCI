@@ -18,6 +18,14 @@ name: Vika deploy
 on:
   repository_dispatch:
     types: [deploy]
+
+  workflow_dispatch:
+    inputs:
+      multi_platform:
+        description: 'if multi platform build? arm64 + amd64'
+        required: false
+        default: false
+        type: boolean
 jobs:
   deploy-vika:
     if: ${{ github.event.action == 'deploy' }}
@@ -69,33 +77,33 @@ jobs:
 #          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
 #        with:
 #          args: whoami && kubectl get pods
-  deploy-prod:
-    runs-on: ubuntu-latest
-    name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
-    #    environment:
-    #      name: production
-    #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
-
-    steps:
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ secrets.CR_PAT }}
-          approvers: paylm
-          issue-title: Deploying ${{ github.event.client_payload.app }} ${{ github.event.client_payload.SEMVER_FULL}} to production
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: check key
-        run: |
-          echo ${{ inputs.tags }}
-          echo  ${{ github.event.client_payload.edition }}
-          echo ${{ github.event_type == 'deploy' }}
-          pwd
-  #      - name: deploy k8s
-  #        uses: wahyd4/kubectl-helm-action@master
-  #        env:
-  #          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
-  #        with:
-  #          args: whoami && kubectl get pods
+#  deploy-prod:
+#    runs-on: ubuntu-latest
+#    name:  ${{ github.event.client_payload.app }} - ${{ github.event.client_payload.SEMVER_FULL}}
+#    #    environment:
+#    #      name: production
+#    #      url: https://integration.vika.ltd/workbench?spaceId=spczdmQDfBAn5
+#
+#    steps:
+#      - uses: trstringer/manual-approval@v1
+#        with:
+#          secret: ${{ secrets.CR_PAT }}
+#          approvers: paylm
+#          issue-title: Deploying ${{ github.event.client_payload.app }} ${{ github.event.client_payload.SEMVER_FULL}} to production
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: check key
+#        run: |
+#          echo ${{ inputs.tags }}
+#          echo  ${{ github.event.client_payload.edition }}
+#          echo ${{ github.event_type == 'deploy' }}
+#          pwd
+#  #      - name: deploy k8s
+#  #        uses: wahyd4/kubectl-helm-action@master
+#  #        env:
+#  #          KUBE_CONFIG_DATA: ${{ secrets.KUBE_VIKA_CONFIG }}
+#  #        with:
+#  #          args: whoami && kubectl get pods
 
   deploy-default:
     runs-on: ubuntu-latest
