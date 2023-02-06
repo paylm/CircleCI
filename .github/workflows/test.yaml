@@ -26,8 +26,6 @@ jobs:
           echo "check env values"
           cat .env
       - name: Run Kubernetes tools
-        uses: stefanprodan/kube-tools@v1
+        uses: wahyd4/kubectl-helm-action@master
         with:
-          kubectl: 1.23.0
-          helmv3: 3.7.2
-          command: helm version && kubectl version
+          args: helm version && kubectl version --client
