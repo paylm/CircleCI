@@ -25,7 +25,9 @@ jobs:
           env | grep MYSQL > .env
           echo "check env values"
           cat .env
-      - name: Deploy
-        uses: paunin/kops@v1.0.4
+      - name: Run Kubernetes tools
+        uses: stefanprodan/kube-tools@v1
         with:
+          kubectl: 1.23.0
+          helmv3: 3.7.2
           command: helm version && kubectl version
