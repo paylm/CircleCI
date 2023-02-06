@@ -28,5 +28,4 @@ jobs:
       - name: Deploy
         uses: WyriHaximus/github-action-helm3@v2
         with:
-          exec: helm version && kubectl version
-          kubeconfig: '${{ secrets.KUBECONFIG }}'
+          exec: helm version ; kubectl version
