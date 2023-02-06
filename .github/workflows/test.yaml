@@ -25,3 +25,8 @@ jobs:
           env | grep MYSQL > .env
           echo "check env values"
           cat .env
+      - name: Deploy
+        uses: WyriHaximus/github-action-helm3@v2
+        with:
+          exec: helm version && kubectl version
+          kubeconfig: '${{ secrets.KUBECONFIG }}'
