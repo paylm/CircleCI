@@ -26,6 +26,6 @@ jobs:
           echo "check env values"
           cat .env
       - name: Deploy
-        uses: WyriHaximus/github-action-helm3@v2
+        uses: paunin/kops@v1.0.4
         with:
-          exec: helm version ; kubectl version
+          command: helm version && kubectl version
