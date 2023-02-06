@@ -27,5 +27,7 @@ jobs:
           cat .env
       - name: Run Kubernetes tools
         uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: "eeeee"
         with:
           args: helm version && kubectl version --client
