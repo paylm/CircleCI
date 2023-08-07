@@ -27,6 +27,13 @@ jobs:
       - name: Sync to CircleCI  Enterprise
         run: |
           rsync -av --exclude='.github/workflows/copy-enterprise.yml' --exclude='.git/' --exclude='ai/' ./.git/CircleCI-enterprise
+            - name: Set commit message
+      - name: Set commit message  
+        id: commit_message_step
+        run: |
+          echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
+          echo "release: APITable Enterprise on ${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'release: APITable Enterprise'
