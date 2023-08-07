@@ -26,6 +26,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Sync to CircleCI  Enterprise
         run: |
+          echo "bracn ${{ env.GITHUB_REPOSITORY }}"
           rsync -av --exclude='.github/workflows/copy-enterprise.yml' --exclude='.git/' --exclude='ai/' ./ ./.git/CircleCI-enterprise
           ls -a ./.git/CircleCI-enterprise
           ls ./
@@ -39,3 +40,5 @@ jobs:
         with:
           commit_message: ${{ steps.commit_message_step.outputs.commit_message }}
           repository: ./.git/CircleCI-enterprise
+          create_branch: true
+          branch: ${{ env.GITHUB_REPOSITORY }}
