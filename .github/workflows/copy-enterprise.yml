@@ -34,8 +34,9 @@ jobs:
       - name: Set commit message  
         id: commit_message_step
         run: |
+          commitLog=`git log --pretty=format:'%s' -1`
           echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
-          echo "release: APITable Enterprise on ${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+          echo "${commitLog}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
