@@ -42,4 +42,4 @@ jobs:
           commit_message: ${{ steps.commit_message_step.outputs.commit_message }}
           repository: ./.git/CircleCI-enterprise
           create_branch: true
-          branch: ${{ env.GITHUB_REF_NAME}}
+          
