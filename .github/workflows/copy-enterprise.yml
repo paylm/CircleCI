@@ -17,7 +17,7 @@ jobs:
       - name: Checkout apitable-enterprise
         uses: actions/checkout@v2
         with:
-          repository: vikadata/apitable-enterprise
+          repository: paylm/CircleCI-enterprise
           ref: ${{ GITHUB_REF_NAME }}
           token: ${{ secrets.CR_PAT }} # `GH_PAT` is a secret that contains your PAT
           path: ./.git/CircleCI-enterprise
@@ -26,7 +26,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Sync to CircleCI  Enterprise
         run: |
-          rsync -av --exclude='.github/workflows/sync-apitable-enterprise.yml' --exclude='.git/' --exclude='ai/' ./ ./.git/apitable-enterprise/
+          rsync -av --exclude='.github/workflows/copy-enterprise.yml' --exclude='.git/' --exclude='ai/' ./ ./.git/paylm/CircleCI-enterprise/
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'release: APITable Enterprise'
