@@ -1,0 +1,32 @@
+name: sync-apitable-enterprise
+
+on:
+  push:
+    tags:
+      - "v*"
+    branches:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  sync-apitable-enterprise:
+    runs-on: [self-hosted, X64]
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v2
+      - name: Checkout apitable-enterprise
+        uses: actions/checkout@v2
+        with:
+          repository: vikadata/apitable-enterprise
+          ref: ${{ GITHUB_REF_NAME }}
+          token: ${{ secrets.CR_PAT }} # `GH_PAT` is a secret that contains your PAT
+          path: ./.git/CircleCI-enterprise
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Sync to CircleCI  Enterprise
+        run: |
+          rsync -av --exclude='.github/workflows/sync-apitable-enterprise.yml' --exclude='.git/' --exclude='ai/' ./ ./.git/apitable-enterprise/
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'release: APITable Enterprise'
