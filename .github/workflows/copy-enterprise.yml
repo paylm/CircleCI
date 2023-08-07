@@ -27,7 +27,6 @@ jobs:
       - name: Sync to CircleCI  Enterprise
         run: |
           rsync -av --exclude='.github/workflows/copy-enterprise.yml' --exclude='.git/' --exclude='ai/' ./.git/CircleCI-enterprise
-            - name: Set commit message
       - name: Set commit message  
         id: commit_message_step
         run: |
