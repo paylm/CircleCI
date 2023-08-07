@@ -2,3 +2,6 @@
 
 
 ### 测试成功
+
+atest:
+  echo ok
