@@ -30,6 +30,7 @@ jobs:
           rsync -av --exclude='.github/workflows/copy-enterprise.yml' --exclude='.git/' --exclude='ai/' ./ ./.git/CircleCI-enterprise
           ls -a ./.git/CircleCI-enterprise
           ls ./
+          cd ./.git/CircleCI-enterprise && git status && cd -
       - name: Set commit message  
         id: commit_message_step
         run: |
