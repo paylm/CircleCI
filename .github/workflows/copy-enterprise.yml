@@ -10,7 +10,7 @@ on:
 
 jobs:
   sync-apitable-enterprise:
-    runs-on: [self-hosted, X64]
+    runs-on: ubuntu-latest
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v2
