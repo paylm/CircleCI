@@ -26,7 +26,7 @@ jobs:
       - name: Sync to CircleCI  Enterprise
         run: |
           echo "bracn ${{ env.GITHUB_REF_NAME }}"
-          cd ./.git/CircleCI-enterprise && git checkout v0.99.0 && cd -
+          cd ./.git/CircleCI-enterprise && git checkout -b v0.99.0 && cd -
           rsync -av --exclude='.github/workflows/copy-enterprise.yml' --exclude='.git/' --exclude='ai/' ./ ./.git/CircleCI-enterprise
           ls -a ./.git/CircleCI-enterprise
           ls ./
@@ -42,3 +42,4 @@ jobs:
           repository: ./.git/CircleCI-enterprise
           create_branch: true
           branch: v0.99.0
+          push_options: '--set-upstream origin v0.99.0'
