@@ -43,4 +43,3 @@ jobs:
           repository: ./.git/CircleCI-enterprise
           create_branch: true
           branch: v0.99.0
-          push_options: '--set-upstream origin v0.99.0'
