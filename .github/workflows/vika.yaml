@@ -121,7 +121,7 @@ jobs:
     steps:
       - uses: sergeysova/jq-action@v2
         with:
-          cmd: jq -n env
+          cmd: 'jq -n env'
       - name: Generate token
         id: generate_token
         uses: tibdex/github-app-token@v1
