@@ -26,7 +26,7 @@ jobs:
       - name: Sync to CircleCI  Enterprise
         run: |
           echo "bracn ${GITHUB_REF_NAME}"
-          cd ./.git/CircleCI-enterprise && git checkout -b ${GITHUB_REF_NAME} && cd -
+          cd ./.git/CircleCI-enterprise  && git pull ; git branch -a ; git checkout -B ${GITHUB_REF_NAME} origin/${GITHUB_REF_NAME} && git pull || git checkout -B ${GITHUB_REF_NAME} && cd -
           rsync -av --exclude='.github/workflows/copy-enterprise.yml' --exclude='.git/' --exclude='ai/' ./ ./.git/CircleCI-enterprise
           ls -a ./.git/CircleCI-enterprise
           ls ./
@@ -34,8 +34,9 @@ jobs:
       - name: Set commit message  
         id: commit_message_step
         run: |
+          commitLog=`git log --pretty=format:'%s' -1`
           echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
-          echo "release: APITable Enterprise on ${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+          echo "${commitLog}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
